@@ -1,11 +1,15 @@
 class Train
-  attr_accessor :speed, :wagons
+  attr_accessor :speed, :wagons, :current_station, :route
   attr_reader :id, :type
 
   def initialize(id, type)
-    @id = id
     if type == 'cargo' || type == 'passenger'
       @type = type
+      @id = id
+      @wagons = 0
+      @speed = 0
+      @route = nil
+      @current_station = Station.new('Depot')
     else
       puts "Train can be only passenger or cargo."
     end
@@ -22,6 +26,28 @@ class Train
   def remove_wagon
     if wagons > 0
       self.wagons -= 1 if speed == 0
+    end
+  end
+
+  def to_s
+    puts "Number: #{ self.id }, Type; #{self.type} "
+  end
+
+  def set_route(route)
+    raise TypeError unless route.is_a? Route
+    self.route = route
+    self.current_station = route.start
+  end
+
+  def move_fd
+    unless self.current_station.name == self.route.finish.name
+      self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) + 1]
+    end
+  end
+
+  def move_back
+    unless self.current_station.name == self.route.start.name
+      self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) - 1]
     end
   end
 
