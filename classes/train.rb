@@ -11,7 +11,7 @@ class Train
       @route = nil
       @current_station = Station.new('Depot')
     else
-      puts "Train can be only passenger or cargo."
+      raise TypeError
     end
   end
 
