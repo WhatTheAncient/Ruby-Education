@@ -19,7 +19,7 @@ class Station
   end
 
   def to_s
-    puts(self.name)
+    puts self.name
   end
 
 end
