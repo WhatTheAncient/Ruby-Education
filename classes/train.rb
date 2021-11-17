@@ -3,16 +3,12 @@ class Train
   attr_reader :id, :type
 
   def initialize(id, type)
-    if type == 'cargo' || type == 'passenger'
       @type = type
       @id = id
       @wagons = 0
       @speed = 0
       @route = nil
-      @current_station = Station.new('Depot')
-    else
-      raise TypeError
-    end
+      @current_station = nil
   end
 
   def stop
@@ -20,7 +16,7 @@ class Train
   end
 
   def add_wagon
-      self.wagons += 1 if speed == 0
+    self.wagons += 1 if speed == 0
   end
 
   def remove_wagon
@@ -34,10 +30,9 @@ class Train
   end
 
   def set_route(route)
-    raise TypeError unless route.is_a? Route
     self.route = route
     self.current_station = route.stations.first
-    route.stations.first.take_train(self)
+    self.current_station.take_train(self)
   end
 
   def move_fd
@@ -51,4 +46,17 @@ class Train
     self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) - 1]
     end
   end
+
+  def next_station
+    unless self.current_station.name == route.stations.last
+      self.route.stations[self.route.stations.find_index(self.current_station) + 1]
+    end
+  end
+
+  def previous_station
+    unless self.current_station.name == route.stations.first
+      self.route.stations[self.route.stations.find_index(self.current_station) - 1]
+    end
+  end
+
 end
