@@ -20,4 +20,8 @@ class Station
     end
   end
 
+  def to_s
+    puts(self.name)
+  end
+
 end
