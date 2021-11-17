@@ -36,19 +36,18 @@ class Train
   def set_route(route)
     raise TypeError unless route.is_a? Route
     self.route = route
-    self.current_station = route.start
+    self.current_station = route.stations.first
   end
 
   def move_fd
-    unless self.current_station.name == self.route.finish.name
-      self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) + 1]
+    unless self.current_station.name == route.stations.last
+    self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) + 1]
     end
   end
 
   def move_back
-    unless self.current_station.name == self.route.start.name
-      self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) - 1]
+    unless self.current_station.name == route.stations.first
+    self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) - 1]
     end
   end
-
 end
