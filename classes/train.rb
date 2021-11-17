@@ -37,6 +37,7 @@ class Train
     raise TypeError unless route.is_a? Route
     self.route = route
     self.current_station = route.stations.first
+    route.stations.first.take_train(self)
   end
 
   def move_fd
