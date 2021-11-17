@@ -3,19 +3,19 @@ class Route
   attr_reader :start, :finish
 
   def initialize(start, finish)
-    raise TypeError unless (start.is_a?(String) && finish.is_a?(String))
+    raise TypeError unless (start.is_a?(Station) && finish.is_a?(Station))
     @stations = []
     @stations << start
     @stations << finish
   end
 
   def add_station(station)
-    raise TypeError unless station.is_a? String
-    stations.insert(stations.size - 1, station) unless stations.include? station
+    raise TypeError unless station.is_a? Station
+    self.stations.insert(stations.size - 1, station) unless self.stations.include? station
   end
 
   def remove_station(station)
-    raise TypeError unless station.is_a? String
-    stations.delete(station) if stations.include? station
+    raise TypeError unless station.is_a? Station
+    self.stations.delete(station) if self.stations.include? station
   end
 end
