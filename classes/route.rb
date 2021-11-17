@@ -1,6 +1,5 @@
 class Route
   attr_accessor :stations
-  attr_reader :start, :finish
 
   def initialize(start, finish)
     raise TypeError unless (start.is_a?(Station) && finish.is_a?(Station))
