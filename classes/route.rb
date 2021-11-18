@@ -9,10 +9,10 @@ class Route
   end
 
   def add_station(station)
-    self.stations.insert(stations.size - 1, station) unless self.stations.include? station
+    self.stations.insert(stations.size - 1, station)
   end
 
   def remove_station(station)
-    self.stations.delete(station) if self.stations.include? station
+    self.stations.delete(station)
   end
 end
