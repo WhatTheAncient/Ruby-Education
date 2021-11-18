@@ -1,4 +1,5 @@
 class Route
+
   attr_accessor :stations
 
   def initialize(start, finish)

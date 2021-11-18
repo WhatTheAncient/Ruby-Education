@@ -1,4 +1,5 @@
 class Train
+
   attr_accessor :speed, :wagons, :current_station, :route
   attr_reader :id, :type
 
@@ -36,25 +37,25 @@ class Train
   end
 
   def move_fd
-    unless self.current_station.name == route.stations.last
+    unless next_station.nil?
     self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) + 1]
     end
   end
 
   def move_back
-    unless self.current_station.name == route.stations.first
+    unless previous_station.nil?
     self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) - 1]
     end
   end
 
   def next_station
-    unless self.current_station.name == route.stations.last
+    unless self.current_station.name == route.stations.last.name
       self.route.stations[self.route.stations.find_index(self.current_station) + 1]
     end
   end
 
   def previous_station
-    unless self.current_station.name == route.stations.first
+    unless self.current_station.name == route.stations.first.name
       self.route.stations[self.route.stations.find_index(self.current_station) - 1]
     end
   end
