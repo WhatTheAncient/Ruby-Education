@@ -37,15 +37,11 @@ class Train
   end
 
   def move_fd
-    unless next_station.nil?
-    self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) + 1]
-    end
+    self.current_station = next_station if next_station
   end
 
   def move_back
-    unless previous_station.nil?
-    self.current_station = self.route.stations[self.route.stations.find_index(self.current_station) - 1]
-    end
+    self.current_station = previous_station if previous_station
   end
 
   def next_station
