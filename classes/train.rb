@@ -6,7 +6,7 @@ class Train
   def initialize(id, type)
       @type = type
       @id = id
-      @wagons = 0
+      @wagons = []
       @speed = 0
       @route = nil
       @current_station = nil
@@ -16,8 +16,8 @@ class Train
     self.speed = 0
   end
 
-  def add_wagon
-    self.wagons += 1 if speed == 0
+  def add_wagon(wagon)
+    self.wagons << wagon
   end
 
   def remove_wagon
