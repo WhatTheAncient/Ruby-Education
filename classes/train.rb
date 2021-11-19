@@ -12,13 +12,11 @@ class Train
   end
 
   def add_wagon(wagon)
-    self.wagons << wagon
+    self.wagons << wagon if (self.type == wagon.type && speed == 0)
   end
 
-  def remove_wagon
-    if wagons > 0
-      self.wagons -= 1 if speed == 0
-    end
+  def remove_wagon(wagon)
+    self.wagons.delete(wagon) if (self.type == wagon.type && speed == 0)
   end
 
   def to_s
