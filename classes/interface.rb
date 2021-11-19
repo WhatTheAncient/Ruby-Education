@@ -4,7 +4,7 @@ class Interface
     @end_of_program = false
     @user_choice = nil
     @trains = {}
-    @stations {}
+    @stations = {}
     @routes = {}
   end
 
