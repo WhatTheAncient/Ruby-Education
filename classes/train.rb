@@ -51,7 +51,7 @@ class Train
     end
   end
   #Данные атрибуты и методы вынесены в protected так как они используются только внутри класса
-  private
+  protected
 
   attr_writer :id, :type, :speed, :wagons, :current_station, :route
 
