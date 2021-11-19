@@ -37,11 +37,19 @@ class Train
   end
 
   def move_fd
-    self.current_station = next_station if next_station
+    if next_station
+      self.current_station.send_train(self)
+      self.current_station = next_station
+      self.current_station.take_train(self)
+    end
   end
 
   def move_back
-    self.current_station = previous_station if previous_station
+    if previous_station
+      self.current_station.send_train(self)
+      self.current_station = previous_station
+      self.current_station.take_train(self)
+    end
   end
 
   def next_station
