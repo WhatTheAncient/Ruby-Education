@@ -1,7 +1,6 @@
 class Train
 
-  attr_accessor :speed, :wagons, :current_station, :route
-  attr_reader :id, :type
+  attr_reader :id, :type, :speed, :current_station, :route, :wagons
 
   def initialize(id, type)
       @type = type
@@ -10,10 +9,6 @@ class Train
       @speed = 0
       @route = nil
       @current_station = nil
-  end
-
-  def stop
-    self.speed = 0
   end
 
   def add_wagon(wagon)
@@ -39,18 +34,26 @@ class Train
   def move_fd
     if next_station
       self.current_station.send_train(self)
+      self.speed = 50
       self.current_station = next_station
       self.current_station.take_train(self)
+      self.stop
     end
   end
 
   def move_back
     if previous_station
       self.current_station.send_train(self)
+      self.speed = 50
       self.current_station = previous_station
       self.current_station.take_train(self)
+      self.stop
     end
   end
+  #Данные атрибуты и методы вынесены в protected так как они используются только внутри класса
+  private
+
+  attr_writer :id, :type, :speed, :wagons, :current_station, :route
 
   def next_station
     unless self.current_station.name == route.stations.last.name
@@ -64,4 +67,7 @@ class Train
     end
   end
 
+  def stop
+    self.speed = 0
+  end
 end

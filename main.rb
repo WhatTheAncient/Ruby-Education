@@ -69,7 +69,7 @@ until end_of_program
     route_management.each {|move| puts "#{move[0]} - #{move[1]}"}
     puts "Enter route name and your choice"
     route_name = gets.chomp
-    choice = gets.chomp.to_i
+    choice = gets.to_i
     case choice
     when 0
       puts "Enter the station name"
@@ -115,7 +115,7 @@ until end_of_program
     train_movement.each {|move| puts "#{move[0]} - #{move[1]}"}
     puts "Enter the train id and your choice"
     train_id = gets.chomp
-    choice = gets.chomp.to_i
+    choice = gets.to_i
     case choice
     when 0 then trains[train_id].move_fd
     when 1 then trains[train_id].move_back
