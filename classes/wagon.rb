@@ -1,8 +1,5 @@
-require_relative 'modules/manufacturer.rb'
 
 class Wagon
-
-  include Manufacturer
 
   attr_accessor :id, :type
 
