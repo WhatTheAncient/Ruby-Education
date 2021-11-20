@@ -5,6 +5,12 @@ class Train
 
   attr_reader :id, :type, :speed, :current_station, :route, :wagons
 
+  @@trains = {}
+
+  def self.find(id)
+    @@trains[id]
+  end
+
   def initialize(id, type)
       @type = type
       @id = id
@@ -12,6 +18,7 @@ class Train
       @speed = 0
       @route = nil
       @current_station = nil
+      @@trains[id] = self
   end
 
   def add_wagon(wagon)
