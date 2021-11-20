@@ -1,6 +1,6 @@
-
+require_relative 'modules/manufacturer'
 class Wagon
-
+  include Manufacturer
   attr_accessor :id, :type
 
   def initialize(id, type)
