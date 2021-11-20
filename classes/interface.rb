@@ -1,3 +1,4 @@
+
 class Interface
 
   def initialize
@@ -31,7 +32,7 @@ class Interface
 
   private
 
-  attr_accessor :end_of_program, :trains, :stations, :routes, :user_choice
+  attr_accessor :end_of_program, :stations, :routes, :user_choice
 
   MENU = {
     0 => "Create station.",
@@ -80,10 +81,10 @@ class Interface
     train_id = gets.chomp
     train_type = gets.chomp
     case train_type.downcase!
-    when 'cargo' then self.trains[train_id] = CargoTrain.new(train_id)
-    when 'passenger' then self.trains[train_id] = PassengerTrain(train_id)
+    when 'cargo' then CargoTrain.new(train_id)
+    when 'passenger' then PassengerTrain(train_id)
     else
-      self.trains[train_id] = Train.new(train_id, train_type)
+      Train.new(train_id, train_type)
     end
   end
 
@@ -120,7 +121,7 @@ class Interface
     train_id = gets.chomp
     puts "Enter the route name"
     route_name = gets.chomp
-    self.trains[train_id].set_route(self.routes[route_name])
+    Train.find(train_id).set_route(self.routes[route_name])
   end
 
   def add_wagon
@@ -130,10 +131,10 @@ class Interface
     puts "Enter the train id"
     train_id = gets.chomp
     case wagon_type.downcase!
-    when 'cargo' then self.trains[train_id].add_wagon(CargoWagon.new(wagon_id))
-    when 'passenger' then self.trains[train_id].add_wagon(PassengerWagon.new(wagon_id))
+    when 'cargo' then Train.find(train_id).add_wagon(CargoWagon.new(wagon_id))
+    when 'passenger' then Train.find(train_id).add_wagon(PassengerWagon.new(wagon_id))
     else
-      self.trains[train_id].add_wagon(Wagon.new(wagon_id, wagon_type))
+      Train.find(train_id).add_wagon(Wagon.new(wagon_id, wagon_type))
     end
   end
 
@@ -144,10 +145,10 @@ class Interface
     puts "Enter the train id"
     train_id = gets.chomp
     case wagon_type.downcase!
-    when 'cargo' then self.trains[train_id].remove_wagon(CargoWagon.new(wagon_id))
-    when 'passenger' then self.trains[train_id].remove_wagon(PassengerWagon.new(wagon_id))
+    when 'cargo' then Train.find(train_id).remove_wagon(CargoWagon.new(wagon_id))
+    when 'passenger' then Train.find(train_id).remove_wagon(PassengerWagon.new(wagon_id))
     else
-      self.trains[train_id].add_wagon(Wagon.new(wagon_id, wagon_type))
+      Train.find(train_id).add_wagon(Wagon.new(wagon_id, wagon_type))
     end
   end
 
@@ -157,8 +158,8 @@ class Interface
     train_id = gets.chomp
     choice = gets.to_i
     case choice
-    when 0 then self.trains[train_id].move_fd
-    when 1 then self.trains[train_id].move_back
+    when 0 then Train.find(train_id).move_fd
+    when 1 then Train.find(train_id).move_back
     end
   end
 

@@ -1,4 +1,14 @@
+require_relative 'modules/manufacturer.rb'
+
 class Train
+
+  include Manufacturer
+
+  @@trains = {}
+
+  def self.find(id)
+    @@trains[id]
+  end
 
   attr_reader :id, :type, :speed, :current_station, :route, :wagons
 
@@ -9,6 +19,7 @@ class Train
       @speed = 0
       @route = nil
       @current_station = nil
+      @@trains[id] = self
   end
 
   def add_wagon(wagon)
