@@ -1,6 +1,6 @@
 class Station
 
-  attr_accessor :name, :trains
+  attr_reader :name, :trains
 
   def initialize(name)
     @trains = []
@@ -22,5 +22,8 @@ class Station
   def to_s
     puts self.name
   end
+  #В поле private были вынесены данные сеттеры так как они используются только при создании объекта, в конструкторе
+  private
+  attr_writer :name, :trains
 
 end
