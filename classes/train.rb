@@ -1,10 +1,18 @@
 require_relative 'modules/manufacturer'
+require_relative 'modules/instance_counter'
 class Train
 
   include Manufacturer
+  include InstanceCounter
 
   attr_reader :id, :type, :speed, :current_station, :route, :wagons
-
+  #Я вижу что строчка ниже общая для классов Поезд (а также его дочерних) Маршрут и Станция,
+  # но я не смог найти способ запихнуть ее в модуль.
+  # У меня есть идея как можно сделать общий модуль который будет реализовывать Train.find, Station.all и функционал
+  # модуля InstanceCounter через хэши. Данный модуль поможет зарефакторить и Interface.
+  # Я вероятно сделаю это завтра, и обновленная версия будет в следующем коммите.
+  # Пока сдаю на проверку всё то что требовалось в задании.
+  @count = 0
   @@trains = {}
 
   def self.find(id)
@@ -18,6 +26,7 @@ class Train
       @speed = 0
       @route = nil
       @current_station = nil
+      register_instance
       @@trains[id] = self
   end
 

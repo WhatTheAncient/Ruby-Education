@@ -1,7 +1,9 @@
+require_relative 'modules/instance_counter'
 class Station
+  include InstanceCounter
 
   attr_reader :name, :trains
-
+  @count = 0
   @@stations = {}
 
   def self.all
