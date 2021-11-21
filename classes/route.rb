@@ -4,7 +4,6 @@ require_relative 'modules/instance_counter'
 class Route
   include InstanceCounter
   attr_accessor :stations
-  @count = 0
 
   def initialize(start, finish)
     @stations = []
