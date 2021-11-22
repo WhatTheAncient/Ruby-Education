@@ -1,7 +1,8 @@
 #В данном классе все методы и атрибуты должны быть public, так как они используются как в пользовательском
 # интерфейсе так и в других классах
+require_relative 'modules/instance_counter'
 class Route
-
+  include InstanceCounter
   attr_accessor :stations
 
   def initialize(start, finish)

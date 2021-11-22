@@ -1,6 +1,16 @@
+require_relative 'modules/manufacturer'
+require_relative 'modules/instance_counter'
 class Train
 
+  include Manufacturer
+  include InstanceCounter
   attr_reader :id, :type, :speed, :current_station, :route, :wagons
+
+  @@trains = {}
+
+  def self.find(id)
+    @@trains[id]
+  end
 
   def initialize(id, type)
       @type = type
@@ -9,6 +19,8 @@ class Train
       @speed = 0
       @route = nil
       @current_station = nil
+      register_instance
+      @@trains[id] = self
   end
 
   def add_wagon(wagon)
