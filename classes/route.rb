@@ -10,7 +10,7 @@ class Route
   def initialize(start, finish)
     @stations = []
     validate!(start, finish)
-    stations << start << finish
+    @stations << start << finish
   end
 
   def add_station(station)
