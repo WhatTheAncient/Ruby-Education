@@ -24,7 +24,9 @@ class Interface
       when 7 then move_train
       when 8 then show_stations
       when 9 then show_trains
-      else end_of_program = true
+      when 10 then show_wagons
+      when 11 then manage_wagon
+      else self.end_of_program = true
       end
     end
   end
@@ -44,6 +46,8 @@ class Interface
     7 => "Move train between stations.",
     8 => "Show stations on route.",
     9 => "Show trains on station",
+    10 => "Show train wagons",
+    11 => "Manage wagon",
     "Another button" => "Exit"
   }
 
@@ -98,10 +102,8 @@ class Interface
     route_name = gets.chomp
     start = gets.chomp
     finish = gets.chomp
-    first_station = Station.new(start)
-    last_station = Station.new(finish)
-    self.stations[start], self.stations[finish] = first_station, last_station
-    self.routes[route_name] = Route.new(first_station, last_station)
+    self.stations[start], self.stations[finish] = stations[start], stations[finish]
+    self.routes[route_name] = Route.new(stations[start], stations[finish])
   end
 
   def manage_route
@@ -135,9 +137,15 @@ class Interface
     wagon_type = gets.chomp
     puts "Enter the train id"
     train_id = gets.chomp
-    case wagon_type.downcase!
-    when 'cargo' then self.trains[train_id].add_wagon(CargoWagon.new(wagon_id))
-    when 'passenger' then self.trains[train_id].add_wagon(PassengerWagon.new(wagon_id))
+    case wagon_type.downcase
+    when 'cargo'
+      puts "Enter the wagon volume"
+      wagon_volume = gets.to_i
+      self.trains[train_id].add_wagon(CargoWagon.new(wagon_id,wagon_volume))
+    when 'passenger'
+      puts "Enter the number of seats"
+      wagon_seats = gets.to_i
+      self.trains[train_id].add_wagon(PassengerWagon.new(wagon_id, wagon_seats))
     else
       self.trains[train_id].add_wagon(Wagon.new(wagon_id, wagon_type))
     end
@@ -150,10 +158,10 @@ class Interface
     puts "Enter the train id"
     train_id = gets.chomp
     case wagon_type.downcase!
-    when 'cargo' then self.trains[train_id].remove_wagon(CargoWagon.new(wagon_id))
-    when 'passenger' then self.trains[train_id].remove_wagon(PassengerWagon.new(wagon_id))
+    when 'cargo' then self.trains[train_id].remove_wagon(wagon_id)
+    when 'passenger' then self.trains[train_id].remove_wagon(wagon_id)
     else
-      self.trains[train_id].add_wagon(Wagon.new(wagon_id, wagon_type))
+      self.trains[train_id].remove_wagon(wagon_id)
     end
   end
 
@@ -177,7 +185,32 @@ class Interface
   def show_trains
     puts "Enter the station name"
     station_name = gets.chomp
-    puts self.stations[station_name].trains
+    self.stations[station_name].each_train {|train| puts train}
+  end
+
+  def show_wagons
+    puts "Enter the train id"
+    train_id = gets.chomp
+    self.trains[train_id].each_wagon {|wagon| puts wagon.values}
+  end
+
+  def manage_wagon
+    puts "Enter the train id"
+    train_id = gets.chomp
+    puts "Enter wagon id"
+    wagon_id = gets.chomp
+    case self.trains[train_id].type
+    when 'cargo'
+      puts "Enter the volume which you want to fill"
+      volume = gets.to_i
+      self.trains[train_id].wagons[wagon_id].fill(volume)
+    when 'passenger'
+      puts "Enter the number of seat which you want to take"
+      seat_number = gets.to_i
+      self.trains[train_id].wagons[wagon_id].take_seat(seat_number)
+    else
+      puts "You can manage only cargo or passenger wagons"
+    end
   end
 
 end

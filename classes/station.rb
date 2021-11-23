@@ -11,6 +11,10 @@ class Station
     @@stations
   end
 
+  def each_train
+    yield self.trains
+  end
+
   def initialize(name)
     @trains = []
     @name = name
@@ -40,5 +44,5 @@ class Station
     raise "Station name can only contains latin symbols!" if self.name !~ NAME_FORMAT
     raise "This station already exist" if @@stations.keys.include? self.name
   end
-  NAME_FORMAT = /^[a-z]{3,12}/i
+  NAME_FORMAT = /\w+/i
 end

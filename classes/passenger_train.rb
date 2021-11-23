@@ -1,6 +1,6 @@
 class PassengerTrain < Train
 
-  def initialize(id, type=:cargo)
+  def initialize(id, type=:passenger)
     super
   end
 

@@ -17,7 +17,7 @@ class Train
       @type = type
       @id = id
       validate!
-      @wagons = []
+      @wagons = {}
       @speed = 0
       @route = nil
       @current_station = nil
@@ -25,16 +25,20 @@ class Train
       @@trains[id] = self
   end
 
-  def add_wagon(wagon)
-    self.wagons << wagon if (self.type == wagon.type && speed == 0)
+  def each_wagon
+    yield(self.wagons)
   end
 
-  def remove_wagon(wagon)
-    self.wagons.delete(wagon) if (self.type == wagon.type && speed == 0)
+  def add_wagon(wagon)
+    self.wagons[wagon.id] = wagon if (self.type.to_s == wagon.type.to_s && speed == 0)
+  end
+
+  def remove_wagon(wagon_id)
+    self.wagons.delete(wagon_id) if speed == 0
   end
 
   def to_s
-    puts "Number: #{ self.id }, Type; #{self.type} "
+    puts "Number: #{ self.id }, Type: #{self.type}, Count of wagons: #{self.wagons.size}"
   end
 
   def set_route(route)
