@@ -26,8 +26,8 @@ class Route
   # бесполезно ведь они нигде больше не используются.
   def validate!(start, finish)
     if not ((start.is_a? Station) && (finish.is_a? Station))
-    raise "Start and Finish must be class Station instances!"
+      raise "Start and Finish must be class Station instances!"
     end
-    raise "Start and Finish must be different stations!" if start.name == finish.name
+      raise "Start and Finish must be different stations!" if start.name == finish.name
   end
 end
