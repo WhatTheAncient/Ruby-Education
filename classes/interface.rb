@@ -79,12 +79,18 @@ class Interface
     puts "Enter train id and type"
     train_id = gets.chomp
     train_type = gets.chomp
+    attempt = 0
     case train_type.downcase!
     when 'cargo' then self.trains[train_id] = CargoTrain.new(train_id)
     when 'passenger' then self.trains[train_id] = PassengerTrain(train_id)
     else
       self.trains[train_id] = Train.new(train_id, train_type)
     end
+    puts "Created #{train_type} train with id = #{train_id}" if self.trains[train_id].valid?
+    rescue RuntimeError => e
+      attempt += 1
+      puts "#{e.message}"
+      retry if attempt <= 1
   end
 
   def create_route
