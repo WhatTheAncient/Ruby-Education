@@ -17,8 +17,7 @@ class CargoWagon < Wagon
   end
 
   def to_s
-    super
-    puts "Free volume: #{free_volume}, filled volume: #{self.filled_volume}"
+    super + " Free volume: #{free_volume}, filled volume: #{self.filled_volume}."
   end
 
   private

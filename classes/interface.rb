@@ -191,7 +191,7 @@ class Interface
   def show_wagons
     puts "Enter the train id"
     train_id = gets.chomp
-    self.trains[train_id].each_wagon {|wagon| puts wagon.values}
+    self.trains[train_id].each_wagon {|wagon| puts wagon}
   end
 
   def manage_wagon

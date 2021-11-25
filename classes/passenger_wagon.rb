@@ -23,8 +23,7 @@ class PassengerWagon < Wagon
   end
 
   def to_s
-    super
-    puts "Count of free seats: #{free_seats}, count of taken seats: #{taken_seats}"
+    super + " Count of free seats: #{free_seats}, count of taken seats: #{taken_seats}."
   end
   private
   attr_writer :seats

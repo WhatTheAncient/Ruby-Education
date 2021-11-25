@@ -12,7 +12,7 @@ class Wagon
   end
 
   def to_s
-    puts "id: #{self.id}, type: #{self.type}"
+    "id: #{self.id}, type: #{self.type}."
   end
 
   protected

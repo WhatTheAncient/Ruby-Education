@@ -25,8 +25,8 @@ class Train
       @@trains[id] = self
   end
 
-  def each_wagon
-    yield(self.wagons)
+  def each_wagon (&block)
+    self.wagons.values.each &block
   end
 
   def add_wagon(wagon)
@@ -38,7 +38,7 @@ class Train
   end
 
   def to_s
-    puts "Number: #{ self.id }, Type: #{self.type}, Count of wagons: #{self.wagons.size}"
+    "Number: #{ self.id }, Type: #{self.type}. Count of wagons: #{self.wagons.size}"
   end
 
   def set_route(route)

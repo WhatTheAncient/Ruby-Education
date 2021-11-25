@@ -11,8 +11,8 @@ class Station
     @@stations
   end
 
-  def each_train
-    yield self.trains
+  def each_train(&block)
+    self.trains.each &block
   end
 
   def initialize(name)
@@ -35,7 +35,7 @@ class Station
   end
 
   def to_s
-    puts self.name
+    self.name
   end
   #В поле private были вынесены данные сеттеры так как они используются только при создании объекта, в конструкторе
   private
