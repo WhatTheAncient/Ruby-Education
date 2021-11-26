@@ -11,6 +11,10 @@ class Station
     @@stations
   end
 
+  def each_train(&block)
+    self.trains.each &block
+  end
+
   def initialize(name)
     @trains = []
     @name = name
@@ -31,7 +35,7 @@ class Station
   end
 
   def to_s
-    puts self.name
+    self.name
   end
   #В поле private были вынесены данные сеттеры так как они используются только при создании объекта, в конструкторе
   private
@@ -40,5 +44,5 @@ class Station
     raise "Station name can only contains latin symbols!" if self.name !~ NAME_FORMAT
     raise "This station already exist" if @@stations.keys.include? self.name
   end
-  NAME_FORMAT = /^[a-z]{3,12}/i
+  NAME_FORMAT = /\w+/i
 end
