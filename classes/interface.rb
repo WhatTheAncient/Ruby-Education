@@ -108,7 +108,6 @@ class Interface
     start = gets.chomp
     finish = gets.chomp
     self.stations[start], self.stations[finish] = stations[start], stations[finish]
-    puts Route.new(stations[start], stations[finish]).valid?
     if Route.new(stations[start], stations[finish]).valid?
       self.routes[route_name] = Route.new(stations[start], stations[finish])
     end

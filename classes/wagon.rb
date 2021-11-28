@@ -10,15 +10,13 @@ class Wagon
     @id = id
     @type = type
   end
+  TYPE_FORMAT = /^[a-z]+$/i
+  ID_FORMAT = /^\d+$/
   validate :id, :format, :ID_FORMAT
   validate :type, :format, :TYPE_FORMAT
 
   def to_s
     "id: #{self.id}, type: #{self.type}."
   end
-
-  protected
-  TYPE_FORMAT = /^[a-z]+$/i
-  ID_FORMAT = /^\d+$/
 
 end
