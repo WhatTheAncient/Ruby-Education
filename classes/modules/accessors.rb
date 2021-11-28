@@ -8,7 +8,7 @@ module Accessors
         instance_variable_set(attr_name, value)
         attr_history << value
       end
-      define_method("#{attr}_history") {attr_history}
+      define_method("#{attr}_history".to_sym) {attr_history}
     end
   end
   def strong_attr_accessor (*attrs)

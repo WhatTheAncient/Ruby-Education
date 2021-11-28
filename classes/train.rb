@@ -1,12 +1,14 @@
 require_relative 'modules/manufacturer'
 require_relative 'modules/instance_counter'
 require_relative 'modules/validation'
+require_relative 'modules/accessors'
 class Train
+  extend Accessors
   include Validation
   include Manufacturer
   include InstanceCounter
-  attr_reader :id, :type, :speed, :current_station, :route, :wagons
-
+  attr_reader :id, :type, :speed, :route, :wagons
+  attr_accessor_with_history :current_station
   @@trains = {}
 
   def self.find(id)
@@ -69,11 +71,10 @@ class Train
       self.stop
     end
   end
-
   #Данные атрибуты и методы вынесены в protected так как они используются только внутри класса
   protected
 
-  attr_writer :id, :type, :speed, :wagons, :current_station, :route
+  attr_writer :id, :type, :speed, :wagons,  :route
 
   def next_station
     unless self.current_station.name == route.stations.last.name

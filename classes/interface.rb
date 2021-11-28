@@ -12,20 +12,21 @@ class Interface
     until self.end_of_program
       show_menu
       puts "Choose what you want to do: "
-      user_choice = gets.to_i
+      user_choice = gets.chomp
       case user_choice
-      when 0 then create_station
-      when 1 then create_train
-      when 2 then create_route
-      when 3 then manage_route
-      when 4 then set_route
-      when 5 then add_wagon
-      when 6 then remove_wagon
-      when 7 then move_train
-      when 8 then show_stations
-      when 9 then show_trains
-      when 10 then show_wagons
-      when 11 then manage_wagon
+      when '0' then create_station
+      when '1' then create_train
+      when '2' then create_route
+      when '3' then manage_route
+      when '4' then set_route
+      when '5' then add_wagon
+      when '6' then remove_wagon
+      when '7' then move_train
+      when '8' then show_stations
+      when '9' then show_trains
+      when '10' then show_wagons
+      when '11' then manage_wagon
+      when '12' then train_stations_history
       else self.end_of_program = true
       end
     end
@@ -48,6 +49,7 @@ class Interface
     9 => "Show trains on station",
     10 => "Show train wagons",
     11 => "Manage wagon",
+    12 => "Show passed stations",
     "Another button" => "Exit"
   }
 
@@ -106,6 +108,7 @@ class Interface
     start = gets.chomp
     finish = gets.chomp
     self.stations[start], self.stations[finish] = stations[start], stations[finish]
+    puts Route.new(stations[start], stations[finish]).valid?
     if Route.new(stations[start], stations[finish]).valid?
       self.routes[route_name] = Route.new(stations[start], stations[finish])
     end
@@ -218,6 +221,12 @@ class Interface
     else
       puts "You can manage only cargo or passenger wagons"
     end
+  end
+
+  def train_stations_history
+    puts "Enter the train number."
+    train_id = gets.chomp
+    puts trains[train_id].current_station_history
   end
 
 end

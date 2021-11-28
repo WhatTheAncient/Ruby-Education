@@ -2,18 +2,20 @@
 # интерфейсе так и в других классах
 require_relative 'modules/instance_counter'
 require_relative 'modules/validation'
+require_relative 'station'
 class Route
   include Validation
   include InstanceCounter
-  attr_accessor :stations
+  attr_accessor :stations, :start, :finish
 
   def initialize(start, finish)
     @stations = []
+    @start = start
+    @finish = finish
     @stations << start << finish
-    self.class.validate @stations.first, :type, Station
-    self.class.validate @stations.last, :type, Station
   end
-
+  validate :start, :type, Station
+  validate :finish, :type, Station
   def add_station(station)
     self.stations.insert(stations.size - 1, station)
   end
