@@ -4,28 +4,30 @@ module Validation
     base.send :include, InstanceMethods
   end
   module ClassMethods
+    attr_accessor :validations
     def validate(object, type, *args)
-      case type.to_sym
-      when :presence
-        raise "Presence validation failed" if object.nil? or object == ''
-      when :format
-        raise "Format validation failed" unless object !~ args
-      when :type
-        raise "Type validation failed" unless object.is_a? args[0]
-      end
+      @validations ||= []
+      @validations << {attr: object, validation_type: type, validation_args: args}
     end
   end
   module InstanceMethods
-    def valid?(format, type)
-      validate!(format, type)
+    def valid?
+      validate!
       true
     rescue
       false
     end
-    def validate!(format, type)
-      self.class.validate(self, :presence)
-      self.class.validate(self, :format, format)
-      self.class.validate(self, :type, type)
+    def validate!
+      self.class.validations.each do |validation|
+        attr = instance_variable_get("@#{validation[:attr]}")
+        val_type = validation[:validation_type]
+        args = validation[:validation_args][0]
+        case val_type
+        when :presence then raise "Presence validation failed!" if attr.nil? or attr.empty?
+        when :format then raise "Format validation failed!" if attr !~ args
+        when :type then raise "Type validation failed!" unless attr.instance_of? args
+        end
+      end
     end
   end
 end
