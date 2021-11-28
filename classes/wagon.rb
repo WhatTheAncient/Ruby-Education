@@ -1,15 +1,16 @@
 require_relative 'modules/manufacturer'
-require_relative 'modules/validation_check'
+require_relative 'modules/validation'
 class Wagon
-  include ValidationCheck
+  include Validation
   include Manufacturer
   attr_accessor :id, :type
 
   def initialize(id, type)
     @id = id
     @type = type
-    validate!
   end
+  validate :id, :format, :ID_FORMAT
+  validate :type, :format, :TYPE_FORMAT
 
   def to_s
     "id: #{self.id}, type: #{self.type}."
@@ -18,8 +19,5 @@ class Wagon
   protected
   TYPE_FORMAT = /^[a-z]+$/i
   ID_FORMAT = /^\d+$/
-  def validate!
-    raise "Wagon id can't contain symbols!" if self.id !~ ID_FORMAT
-    raise "Wagon type can only contain latin symbols!" if self.type !~ TYPE_FORMAT
-  end
+
 end
