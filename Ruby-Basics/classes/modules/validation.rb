@@ -30,24 +30,20 @@ module Validation
         attr = instance_variable_get("@#{validation[:attr]}")
         val_type = validation[:validation_type]
         args = validation[:validation_args][0]
-        case val_type
-        when :presence then send(presence_validation(attr))
-        when :format then send(format_validation(attr, args))
-        when :type then send(type_validation(attr, args))
-        end
+        send("#{val_type}_validation", attr, args)
       end
     end
 
-    def presence_validation(attr)
+    def presence_validation(attr, *args)
       raise "Presence validation failed!" if attr.nil? or attr.empty?
     end
 
-    def format_validation(attr, regex)
-      raise "Format validation failed!" if attr !~ regex
+    def format_validation(attr, *args)
+      raise "Format validation failed!" if attr !~ args[0]
     end
 
-    def type_validation(attr, type)
-      raise "Type validation failed!" unless attr.instance_of? type
+    def type_validation(attr, *args)
+      raise "Type validation failed!" unless attr.instance_of? args[0]
     end
 
   end
