@@ -1,4 +1,5 @@
 module Accessors
+
   def attr_accessor_with_history (*attrs)
     attrs.each do |attr|
       attr_history = []
@@ -11,6 +12,7 @@ module Accessors
       define_method("#{attr}_history".to_sym) {attr_history}
     end
   end
+
   def strong_attr_accessor (*attrs)
     attrs.each_slice(2) do |attr, type|
       attr_name = "@#{attr}".to_sym
@@ -24,4 +26,5 @@ module Accessors
       end
     end
   end
+
 end
