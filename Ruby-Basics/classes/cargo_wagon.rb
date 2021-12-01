@@ -1,5 +1,7 @@
+
 class CargoWagon < Wagon
-  attr_reader :volume, :filled_volume
+  attr_reader :filled_volume
+  strong_attr_accessor :volume, Fixnum
   def initialize(id, type=:cargo, volume)
     super(id, type)
     @volume = volume
@@ -21,5 +23,5 @@ class CargoWagon < Wagon
   end
 
   private
-  attr_writer :volume, :filled_volume
+  attr_writer :filled_volume
 end

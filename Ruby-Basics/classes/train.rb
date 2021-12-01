@@ -1,12 +1,14 @@
 require_relative 'modules/manufacturer'
 require_relative 'modules/instance_counter'
-require_relative 'modules/validation_check'
+require_relative 'modules/validation'
+require_relative 'modules/accessors'
 class Train
-  include ValidationCheck
+  extend Accessors
+  include Validation
   include Manufacturer
   include InstanceCounter
-  attr_reader :id, :type, :speed, :current_station, :route, :wagons
-
+  attr_reader :id, :type, :speed, :route, :wagons
+  attr_accessor_with_history :current_station
   @@trains = {}
 
   def self.find(id)
@@ -16,7 +18,6 @@ class Train
   def initialize(id, type)
       @type = type
       @id = id
-      validate!
       @wagons = {}
       @speed = 0
       @route = nil
@@ -24,6 +25,10 @@ class Train
       register_instance
       @@trains[id] = self
   end
+  ID_FORMAT = /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
+  TYPE_FORMAT = /^[a-z]+$/i
+  validate :id, :format, ID_FORMAT
+  validate :type, :format, TYPE_FORMAT
 
   def each_wagon (&block)
     self.wagons.values.each &block
@@ -66,17 +71,10 @@ class Train
       self.stop
     end
   end
-
   #Данные атрибуты и методы вынесены в protected так как они используются только внутри класса
   protected
-  ID_FORMAT = /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
-  TYPE_FORMAT = /^[a-z]+$/i
-  attr_writer :id, :type, :speed, :wagons, :current_station, :route
 
-  def validate!
-    raise "Invalid train number. It should contain 3 digits or characters, optional dash and 2 digits or characters again" if self.id !~ ID_FORMAT
-    raise "Train type can only contain latin symbols!" if self.type !~ TYPE_FORMAT
-  end
+  attr_writer :id, :type, :speed, :wagons,  :route
 
   def next_station
     unless self.current_station.name == route.stations.last.name
